@@ -12,7 +12,7 @@ export PATH="$HOME/.elan/bin:$PATH"
 cd "$(dirname "$0")" || exit 1
 NS="Clifford"
 LIB="Clifford"
-REQUIRED="Clifford.clifford_one Clifford.clifford_two Clifford.second_onCircleM_left Clifford.second_onCircleM_right Clifford.second_eq_coords Clifford.onCircleM_iff Clifford.mD_ne_zero Clifford.clifford_two_clean Clifford.collinear_of_line Clifford.miquel_all_eq Clifford.clifford_points_on Clifford.mem_line_of Clifford.cliffordChain_four Clifford.cliffordChain_five Clifford.collinear_iff_conj_mul Clifford.transversal_iff Clifford.triP_ne_zero_iff Clifford.cross_second Clifford.cycP_ne_zero_iff Clifford.onCircleM_iff_mem_sphere Clifford.genTriple_iff"
+REQUIRED="Clifford.clifford_one Clifford.clifford_two Clifford.second_onCircleM_left Clifford.second_onCircleM_right Clifford.second_eq_coords Clifford.onCircleM_iff Clifford.mD_ne_zero Clifford.clifford_two_clean Clifford.collinear_of_line Clifford.miquel_all_eq Clifford.clifford_points_on Clifford.mem_line_of Clifford.cliffordChain_four Clifford.cliffordChain_five Clifford.collinear_iff_conj_mul Clifford.transversal_iff Clifford.triP_ne_zero_iff Clifford.cross_second Clifford.cycP_ne_zero_iff Clifford.onCircleM_iff_mem_sphere Clifford.genTriple_iff Clifford.cD_eq_zero Clifford.chain4_cD Clifford.chain5_mem Clifford.Counter6.cx_genPosN Clifford.Counter6.not_chain6 Clifford.Counter6.not_cliffordChain_six Clifford.cliffordChain_three Clifford.not_chain_of_extends Clifford.GenPosN.exists_snoc Clifford.not_cliffordChain_of_six_le Clifford.cliffordChain_iff"
 SOURCES="Clifford/*.lean Clifford.lean"
 [ -e .lake/packages/mathlib ] || { echo "FAIL: Mathlib packages missing (run setup by hand)"; exit 1; }
 if [ "${SCAFFOLD:-0}" != "1" ]; then

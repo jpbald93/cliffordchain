@@ -4,7 +4,8 @@
 # and expects it to FAIL at the stated stage. The real repository is never modified.
 # Tests run one at a time (Lean builds are memory-heavy).
 # Defects are planted in Clifford/Basic.lean.
-# Usage: bash tests/tamper.sh [tests...]   (default: sorry ax2line evalfake macro wrap falsehyp cleanand)
+# Usage: bash tests/tamper.sh [tests...]   (default: sorry ax2line evalfake macro wrap falsehyp cleanand classify6)
+# classify6 changes `cliffordChain_iff` (Clifford/Classify.lean) to claim `n ≤ 6` (false: `Counter6`).
 # falsehyp drops the non-degeneracy hypothesis `hk : CliffordNondeg …` of `clifford_two`
 #   (without it the five points may be collinear), so the proof must no longer build.
 # cleanand turns the disjunction `Cospherical … ∨ Collinear …` of `clifford_two_clean`
@@ -52,17 +53,19 @@ LEAN
               ! grep -q 'hk : CliffordNondeg' "$d/$C" || return 1 ;;
     cleanand) subst_lit "$d/Clifford/Clean.lean" 'Set ℂ) ∨' 'Set ℂ) ∧' 'theorem clifford_two_clean' || return 1
               grep -q 'Set ℂ) ∧' "$d/Clifford/Clean.lean" || return 1 ;;
+    classify6) subst_lit "$d/Clifford/Classify.lean" 'CliffordChain n ↔ n ≤ 5' 'CliffordChain n ↔ n ≤ 6' 'theorem cliffordChain_iff' || return 1
+              grep -q 'CliffordChain n ↔ n ≤ 6' "$d/Clifford/Classify.lean" || return 1 ;;
     *) return 1 ;;
   esac
 }
 
 expect() { case "$1" in
   sorry|ax2line|evalfake|macro) echo "FAIL: forbidden token" ;;
-  falsehyp|cleanand) echo "FAIL: build" ;;
+  falsehyp|cleanand|classify6) echo "FAIL: build" ;;
   wrap) echo "FAIL: nonstandard axioms" ;;
 esac; }
 
-TESTS="${*:-sorry ax2line evalfake macro wrap falsehyp cleanand}"
+TESTS="${*:-sorry ax2line evalfake macro wrap falsehyp cleanand classify6}"
 bad=0
 for t in $TESTS; do
   mk "$t"

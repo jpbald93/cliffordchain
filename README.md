@@ -1,6 +1,6 @@
 # Clifford's chain as a general predicate in Lean 4 (n = 4, 5)
 
-An existential predicate `CliffordChain n` for Clifford's chain for every n, proved for n = 4 and n = 5, with bridges tying its general-position conditions to geometry.
+An existential predicate `CliffordChain n` for Clifford's chain, set in the finite plane ℂ, with a complete classification: it holds exactly for n ≤ 5 (`cliffordChain_iff`). For n = 6 an exact six-circle counterexample in general position (`Counter6`) has its Clifford point at infinity, which the finite plane cannot represent; it propagates to every n ≥ 6. Bridges tie the general-position conditions to geometry.
 
 This repository is one of eight Lean 4 developments accompanying the paper *Circle configurations in
 classical plane geometry, formalized in Lean 4: Clifford's chain, Miquel's five circles, Lester,
@@ -8,7 +8,7 @@ Sawayama–Thébault and Kosnita* (J. Bald, 2026). The paper states each theorem
 hypothesis, lists the degenerate configurations each statement excludes, and reports the verification
 summarised below.
 
-**Status:** all statements proved, no `sorry`. `gate.sh` checks **21** named declarations.
+**Status:** all statements proved, no `sorry`. `gate.sh` checks **32** named declarations.
 
 ## Main statements
 
@@ -21,21 +21,27 @@ summarised below.
 | `Clifford.triP_ne_zero_iff` | `Clifford/Bridge.lean:62` | first `GenTriple` condition ⇔ centres not collinear |
 | `Clifford.cycP_ne_zero_iff` | `Clifford/Bridge.lean:83` | second condition ⇔ the three second intersections not collinear (centres not collinear) |
 | `Clifford.genTriple_iff` | `Clifford/Bridge.lean:110` | `GenTriple` ⇔ neither centres nor second intersections collinear |
+| `Clifford.cliffordChain_iff` | `Clifford/Classify.lean:227` | **classification:** `CliffordChain n ↔ n ≤ 5` |
+| `Clifford.Counter6.not_cliffordChain_six` | `Clifford/Counter6.lean:227` | the explicit six-circle counterexample (`Counter6.cx`, Gaussian-integer centres) |
+| `Clifford.not_cliffordChain_of_six_le` | `Clifford/Classify.lean:219` | `¬ CliffordChain n` for every `n ≥ 6` |
 | `Clifford.onCircleM_iff_mem_sphere` | `Clifford/Bridge.lean:104` | the circle model is Mathlib's `Metric.sphere c ‖c‖` |
 
 Read the Lean statement for the exact hypotheses; the paper lists them in prose.
 
+`GENERAL_REPORT.md` records how the counterexample was found; `numerics/` holds the exact-arithmetic
+scripts used in that search (not needed to build or check the Lean proofs).
+
 ## Verification
 
-`./gate.sh` builds the library and runs `#print axioms` on the 21 declarations in its `REQUIRED`
+`./gate.sh` builds the library and runs `#print axioms` on the 32 declarations in its `REQUIRED`
 list. It fails if a source file contains `sorry`, `admit`, `native_decide`, `axiom`, `#eval`, `run_cmd`,
 `set_option`, a macro or syntax extension; if the build fails; or if any listed declaration depends on
 anything other than `propext`, `Classical.choice` and `Quot.sound`.
 
-Expected output: `PASS (21 declarations, standard axioms only)`. Checked on x86-64 Linux and arm64
+Expected output: `PASS (32 declarations, standard axioms only)`. Checked on x86-64 Linux and arm64
 macOS at the pinned Mathlib revision.
 
-`bash tests/tamper.sh` plants defects in scratch copies (ax2line, cleanand, evalfake, falsehyp, macro, sorry, wrap) and checks that the gate
+`bash tests/tamper.sh` plants defects in scratch copies (ax2line, classify6, cleanand, evalfake, falsehyp, macro, sorry, wrap) and checks that the gate
 rejects each one.
 
 The paper also reports a statement-level battery (conclusion mutations, contradiction probe,
