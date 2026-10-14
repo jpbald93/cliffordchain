@@ -40,8 +40,10 @@ Clifford point at infinity has nowhere to go.
     omitting circle 5 gives Im z = −4.
   - The lines for omitting circles 4, 5 and 0 have no common point (an exact rational certificate
     gives `1 = 0`).
-  - Perturbing `c₅` by ε moves the classical level-6 point to |p| ≈ 2.4·10⁻²/ε (ε = 1e-2, 1e-4,
-    1e-8 give 2.4e3, 2.4e5, 2.4e9). So the "missing" point really is the point at infinity.
+  - Perturbing `c₅` (0-based; the last centre, 4) to 4 + ε (real ε ≠ 0) moves the classical level-6
+    point to exactly 4 − 4i + 50/ε, so |p| ≈ 50/|ε|: the "missing" point really is the point at infinity.
+    (Corrected 2026-10-14: an earlier version of this report gave the coefficient as 2.4·10⁻², with
+    inconsistent example values; the exact value was recomputed independently by two checkers.)
 * Geometric meaning. Invert at M. The six circles become six lines in general position. Their
   classical Clifford point is a perfectly good finite point that happens to be M itself, and the
   inversion sends it to ∞. Clifford's theorem holds; the predicate cannot express ∞.
